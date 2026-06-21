@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Курс H. pylori — трекер по дням</title>
+<style>
+  :root{
+    --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; --bg:#f8fafc;
+    --blue:#1d4ed8; --blue-bg:#eff6ff;
+    --green:#15803d; --green-bg:#ecfdf5;
+    --red:#b91c1c; --red-bg:#fef2f2;
+    --amber:#b45309; --amber-bg:#fffbeb;
+    --purple:#7e22ce;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);line-height:1.5;margin:0;padding:18px 14px 60px;background:var(--bg);
+    max-width:680px;margin:0 auto;}
+  h1{font-size:21px;margin:0 0 2px;}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 14px;}
+  .progwrap{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:16px;position:sticky;top:8px;z-index:5;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+  .progtop{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;margin-bottom:8px;}
+  .progtop b{font-size:16px;}
+  .bar{height:9px;background:#e5e7eb;border-radius:6px;overflow:hidden;}
+  .fill{height:100%;background:linear-gradient(90deg,var(--green),#22c55e);width:0;transition:width .3s;}
+  .day{background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;}
+  .day.today{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue-bg);}
+  .day.done .dhead{background:var(--green-bg);}
+  .dhead{display:flex;align-items:center;gap:10px;padding:13px 15px;cursor:pointer;user-select:none;}
+  .dnum{flex:none;width:34px;height:34px;border-radius:10px;background:var(--blue-bg);color:var(--blue);
+    font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1;}
+  .dnum small{font-size:8px;font-weight:600;}
+  .dtitle{flex:1;}
+  .dtitle .dt1{font-weight:600;font-size:15px;}
+  .dtitle .dt2{font-size:12px;color:var(--muted);}
+  .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;}
+  .b-today{background:var(--blue);color:#fff;}
+  .b-done{background:var(--green);color:#fff;}
+  .chev{color:var(--muted);transition:transform .2s;font-size:13px;}
+  .day.open .chev{transform:rotate(90deg);}
+  .dbody{display:none;padding:4px 15px 14px;border-top:1px solid var(--line);}
+  .day.open .dbody{display:block;}
+  .slot{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #f1f5f9;}
+  .slot:last-child{border-bottom:none;}
+  .slot label{display:flex;gap:11px;align-items:flex-start;cursor:pointer;width:100%;}
+  .cb{flex:none;width:24px;height:24px;border:2px solid #cbd5e1;border-radius:7px;margin-top:2px;
+    display:flex;align-items:center;justify-content:center;background:#fff;transition:.15s;}
+  .slot input{position:absolute;opacity:0;width:0;height:0;}
+  .slot input:checked + label .cb{background:var(--green);border-color:var(--green);}
+  .cb svg{opacity:0;}
+  .slot input:checked + label .cb svg{opacity:1;}
+  .slot input:checked + label .sbody{opacity:.5;text-decoration:line-through;}
+  .stime{flex:none;width:54px;font-weight:700;font-size:13px;color:var(--blue);}
+  .sbody{flex:1;}
+  .pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;margin:1px 3px 1px 0;}
+  .p-omz{background:var(--blue-bg);color:var(--blue);}
+  .p-tet{background:#fee2e2;color:#b91c1c;}
+  .p-met{background:#f3e8ff;color:var(--purple);}
+  .p-den{background:#fef3c7;color:#92400e;}
+  .p-reb{background:#dcfce7;color:#166534;}
+  .p-pro{background:#dbeafe;color:#1d4ed8;}
+  .snote{font-size:11px;color:var(--muted);margin-top:3px;}
+  .start-card{background:var(--green-bg);border:1px solid #bbf7d0;border-radius:14px;padding:14px 16px;margin-bottom:10px;font-size:13px;}
+  .start-card b{color:var(--green);}
+  h2{font-size:15px;margin:24px 0 8px;}
+  .ref{background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;}
+  .rhead{padding:13px 15px;font-weight:600;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+  .rbody{display:none;padding:0 15px 14px;font-size:13px;}
+  .ref.open .rbody{display:block;}
+  .ref.open .chev{transform:rotate(90deg);}
+  ul{margin:6px 0;padding-left:20px;}li{margin:4px 0;}
+  .ok{color:var(--green);font-weight:600;}.no{color:var(--red);font-weight:600;}
+  .disc{font-size:11px;color:var(--muted);margin-top:20px;text-align:center;}
+  .reset{display:block;margin:18px auto 0;font-size:12px;color:var(--muted);background:none;border:1px solid var(--line);
+    border-radius:8px;padding:7px 14px;cursor:pointer;}
+</style>
+</head>
+<body>
+  <h1>🦠 Курс H. pylori</h1>
+  <p class="sub">Висмутовая квадротерапия (PBMT) · 14 дней · 20 июня – 3 июля 2026</p>
+
+  <div class="progwrap">
+    <div class="progtop"><span>Прогресс курса</span><span><b id="pct">0%</b> · <span id="cnt">0 / 0</span></span></div>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+  </div>
+
+  <div class="start-card">
+    <b>✅ День 1 — суббота, 20 июня (старт в обед)</b><br>
+    Курс начат частично с обеда: принято Omeprazole + De-Nol + Metronidazole, вечером добавлен Tetracycline. Полные дни считаются со 2-го дня.
+  </div>
+
+  <div id="days"></div>
+
+  <button class="reset" onclick="resetAll()">↺ Сбросить все отметки</button>
+
+  <h2>📋 Справка</h2>
+
+  <div class="ref" data-ref>
+    <div class="rhead">⚠️ Главные правила <span class="chev">▶</span></div>
+    <div class="rbody">
+      <ul>
+        <li><b>Тетрациклин — без молока/сыра/йогурта, кальция, железа, магния, антацидов в пределах 2 часов</b> (блокируют всасывание). Запивать большим стаканом воды.</li>
+        <li><b>Беречься от солнца ☀️</b> (Бали!) — тетрациклин повышает чувствительность кожи. SPF, прикрываться.</li>
+        <li>Тетрациклин — <b>не ложиться 30 мин</b> после приёма.</li>
+        <li>Omeprazole — только <b>до еды</b>. De-Nol — не запивать молоком.</li>
+        <li><b>Метронидазол + алкоголь = опасно.</b> Ноль спиртного весь курс + 3 дня после (до ~6 июля).</li>
+        <li>Пропить курс <b>полностью</b>, без пропусков, даже если станет легче.</li>
+        <li>Норма: металлический привкус, тёмная моча (метронидазол), <b>чёрный стул</b> (De-Nol).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ref" data-ref>
+    <div class="rhead">🥤🍽 Можно / нельзя <span class="chev">▶</span></div>
+    <div class="rbody">
+      <p><span class="ok">✅ Можно:</span> вода, слабый тёплый чай, травяной чай; каши, бананы, варёное/на пару, супы; йогурт/кефир — но не в пределах 2 ч от тетрациклина.</p>
+      <p><span class="no">🚫 Нельзя:</span> алкоголь (опасно с метронидазолом), молочка рядом с тетрациклином, комбуча; острое/жареное/жирное, кислое (цитрус, томат), копчёное, sambal/чили; газировка, энергетики, крепкий кофе, кислые соки.</p>
+    </div>
+  </div>
+
+  <div class="ref" data-ref>
+    <div class="rhead">📌 После курса — контрольный тест <span class="chev">▶</span></div>
+    <div class="rbody">
+      <ul>
+        <li>Последняя доза антибиотиков — <b>3 июля</b>. Алкоголь не раньше ~6 июля.</li>
+        <li>Omeprazole можно продолжить для заживления, но <b>отменить за 2 недели до теста</b>.</li>
+        <li>Дыхательный тест (Urea Breath Test) — <b>не раньше чем через 4 недели</b> после окончания антибиотиков и De-Nol, т.е. примерно <b>с 31 июля</b>.</li>
+        <li>В период отмены омепразола желудок можно «перекрыть» фамотидином/антацидом — на тест не влияют.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="disc">На основе схемы лечащего врача и рекомендаций ACG (2024) / Maastricht VI. Не заменяет консультацию врача.</p>
+
+<script>
+const START = new Date(2026,5,20); // 20 June 2026 (Day 1)
+const TOTAL_DAYS = 14;
+const DOW = ['вс','пн','вт','ср','чт','пт','сб'];
+const MON = ['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+const slots = [
+  {t:'07:30', meds:[['Omeprazole 20','p-omz'],['De-Nol 120','p-den'],['Tetracycline 500','p-tet']], n:'Натощак, водой, без молока'},
+  {t:'08:00', meds:[['Metronidazole 500','p-met'],['Rebamipide 100','p-reb']], n:'Завтрак, с едой'},
+  {t:'13:00', meds:[['De-Nol 120','p-den'],['Tetracycline 500','p-tet']], n:'За 30 мин до обеда, без молока'},
+  {t:'13:30', meds:[['Metronidazole 500','p-met'],['Rebamipide 100','p-reb']], n:'Обед, с едой'},
+  {t:'~15:30', meds:[['Пробиотик','p-pro']], n:'≥2 ч от антибиотиков'},
+  {t:'18:30', meds:[['De-Nol 120','p-den'],['Tetracycline 500','p-tet']], n:'За 30 мин до ужина, без молока'},
+  {t:'19:00', meds:[['Metronidazole 500','p-met'],['Rebamipide 100','p-reb']], n:'Ужин, с едой'},
+  {t:'22:30', meds:[['Omeprazole 20','p-omz'],['De-Nol 120','p-den'],['Tetracycline 500','p-tet']], n:'Натощак, не ложиться 30 мин'},
+];
+const KEY='hp_tracker_v1';
+let state = JSON.parse(localStorage.getItem(KEY) || '{}');
+function save(){localStorage.setItem(KEY, JSON.stringify(state));}
+
+const today = new Date(); today.setHours(0,0,0,0);
+const daysEl = document.getElementById('days');
+let html='';
+for(let d=2; d<=TOTAL_DAYS; d++){
+  const date = new Date(START); date.setDate(START.getDate()+(d-1));
+  const isToday = date.getTime()===today.getTime();
+  const dateStr = DOW[date.getDay()]+', '+date.getDate()+' '+MON[date.getMonth()];
+  let allDone=true, slotHtml='';
+  slots.forEach((s,i)=>{
+    const id='d'+d+'_'+i;
+    const checked = state[id] ? 'checked':'';
+    if(!state[id]) allDone=false;
+    const pills = s.meds.map(m=>`<span class="pill ${m[1]}">${m[0]}</span>`).join(' ');
+    slotHtml+=`<div class="slot"><input type="checkbox" id="${id}" ${checked} onchange="toggle('${id}')">
+      <label for="${id}"><span class="cb"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 6" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="stime">${s.t}</span><span class="sbody">${pills}<div class="snote">${s.n}</div></span></label></div>`;
+  });
+  const openCls = isToday ? 'open':'';
+  const badge = isToday ? '<span class="badge b-today">сегодня</span>' : (allDone?'<span class="badge b-done">✓</span>':'');
+  html+=`<div class="day ${isToday?'today':''} ${allDone?'done':''} ${openCls}" id="day${d}">
+    <div class="dhead" onclick="toggleDay(${d})">
+      <div class="dnum">${d}<small>ДЕНЬ</small></div>
+      <div class="dtitle"><div class="dt1">${dateStr}</div><div class="dt2">8 приёмов</div></div>
+      ${badge}<span class="chev">▶</span>
+    </div>
+    <div class="dbody">${slotHtml}</div>
+  </div>`;
+}
+daysEl.innerHTML=html;
+
+function toggle(id){ state[id]=document.getElementById(id).checked; save(); updateProgress(); updateDayBadge(id); }
+function toggleDay(d){ document.getElementById('day'+d).classList.toggle('open'); }
+function updateDayBadge(id){
+  const d = id.split('_')[0].slice(1);
+  const dayEl=document.getElementById('day'+d);
+  let all=true; slots.forEach((s,i)=>{ if(!state['d'+d+'_'+i]) all=false; });
+  dayEl.classList.toggle('done', all);
+}
+function updateProgress(){
+  const total=(TOTAL_DAYS-1)*slots.length;
+  let done=0; for(const k in state){ if(state[k]) done++; }
+  const pct=Math.round(done/total*100);
+  document.getElementById('fill').style.width=pct+'%';
+  document.getElementById('pct').textContent=pct+'%';
+  document.getElementById('cnt').textContent=done+' / '+total;
+}
+function resetAll(){ if(confirm('Сбросить все отметки?')){ state={}; save(); location.reload(); } }
+updateProgress();
+
+document.querySelectorAll('[data-ref]').forEach(r=>{
+  r.querySelector('.rhead').addEventListener('click',()=>r.classList.toggle('open'));
+});
+</script>
+</body>
+</html>
