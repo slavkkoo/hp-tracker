@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Курс H. pylori — трекер по дням</title>
+<title>H. pylori Course — Daily Tracker</title>
 <style>
   :root{
     --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; --bg:#f8fafc;
@@ -77,76 +77,76 @@
 </style>
 </head>
 <body>
-  <h1>🦠 Курс H. pylori</h1>
-  <p class="sub">Висмутовая квадротерапия (PBMT) · 14 дней · 20 июня – 3 июля 2026</p>
+  <h1>🦠 H. pylori Course</h1>
+  <p class="sub">Bismuth quadruple therapy (PBMT) · 14 days · June 20 – July 3, 2026</p>
 
   <div class="progwrap">
-    <div class="progtop"><span>Прогресс курса</span><span><b id="pct">0%</b> · <span id="cnt">0 / 0</span></span></div>
+    <div class="progtop"><span>Course progress</span><span><b id="pct">0%</b> · <span id="cnt">0 / 0</span></span></div>
     <div class="bar"><div class="fill" id="fill"></div></div>
   </div>
 
   <div class="start-card">
-    <b>✅ День 1 — суббота, 20 июня (старт в обед)</b><br>
-    Курс начат частично с обеда: принято Omeprazole + De-Nol + Metronidazole, вечером добавлен Tetracycline. Полные дни считаются со 2-го дня.
+    <b>✅ Day 1 — Saturday, June 20 (started at lunch)</b><br>
+    Course started partially at lunch: took Omeprazole + De-Nol + Metronidazole; Tetracycline added in the evening. Full days counted from Day 2.
   </div>
 
   <div id="days"></div>
 
-  <button class="reset" onclick="resetAll()">↺ Сбросить все отметки</button>
+  <button class="reset" onclick="resetAll()">↺ Reset all checkmarks</button>
 
-  <h2>📋 Справка</h2>
+  <h2>📋 Reference</h2>
 
   <div class="ref" data-ref>
-    <div class="rhead">⚠️ Главные правила <span class="chev">▶</span></div>
+    <div class="rhead">⚠️ Key rules <span class="chev">▶</span></div>
     <div class="rbody">
       <ul>
-        <li><b>Тетрациклин — без молока/сыра/йогурта, кальция, железа, магния, антацидов в пределах 2 часов</b> (блокируют всасывание). Запивать большим стаканом воды.</li>
-        <li><b>Беречься от солнца ☀️</b> (Бали!) — тетрациклин повышает чувствительность кожи. SPF, прикрываться.</li>
-        <li>Тетрациклин — <b>не ложиться 30 мин</b> после приёма.</li>
-        <li>Omeprazole — только <b>до еды</b>. De-Nol — не запивать молоком.</li>
-        <li><b>Метронидазол + алкоголь = опасно.</b> Ноль спиртного весь курс + 3 дня после (до ~6 июля).</li>
-        <li>Пропить курс <b>полностью</b>, без пропусков, даже если станет легче.</li>
-        <li>Норма: металлический привкус, тёмная моча (метронидазол), <b>чёрный стул</b> (De-Nol).</li>
+        <li><b>Tetracycline — no milk/cheese/yogurt, calcium, iron, magnesium or antacids within 2 hours</b> (they block absorption). Take with a large glass of water.</li>
+        <li><b>Stay out of the sun ☀️</b> (Bali!) — tetracycline increases skin sensitivity, you burn easily. Use SPF, cover up.</li>
+        <li>Tetracycline — <b>don't lie down for 30 min</b> after taking it.</li>
+        <li>Omeprazole — only <b>before meals</b>. De-Nol — don't take with milk.</li>
+        <li><b>Metronidazole + alcohol = dangerous.</b> Zero alcohol the whole course + 3 days after (until ~July 6).</li>
+        <li>Finish the <b>full course</b>, no missed doses, even if you feel better.</li>
+        <li>Normal: metallic taste, dark urine (metronidazole), <b>black stool</b> (De-Nol).</li>
       </ul>
     </div>
   </div>
 
   <div class="ref" data-ref>
-    <div class="rhead">🥤🍽 Можно / нельзя <span class="chev">▶</span></div>
+    <div class="rhead">🥤🍽 Allowed / avoid <span class="chev">▶</span></div>
     <div class="rbody">
-      <p><span class="ok">✅ Можно:</span> вода, слабый тёплый чай, травяной чай; каши, бананы, варёное/на пару, супы; йогурт/кефир — но не в пределах 2 ч от тетрациклина.</p>
-      <p><span class="no">🚫 Нельзя:</span> алкоголь (опасно с метронидазолом), молочка рядом с тетрациклином, комбуча; острое/жареное/жирное, кислое (цитрус, томат), копчёное, sambal/чили; газировка, энергетики, крепкий кофе, кислые соки.</p>
+      <p><span class="ok">✅ Allowed:</span> water, weak warm tea, herbal tea; porridge, bananas, boiled/steamed food, soups; yogurt/kefir — but not within 2h of tetracycline.</p>
+      <p><span class="no">🚫 Avoid:</span> alcohol (dangerous with metronidazole), dairy near tetracycline, kombucha; spicy/fried/fatty, sour (citrus, tomato), smoked, sambal/chili; soda, energy drinks, strong coffee, sour juices.</p>
     </div>
   </div>
 
   <div class="ref" data-ref>
-    <div class="rhead">📌 После курса — контрольный тест <span class="chev">▶</span></div>
+    <div class="rhead">📌 After the course — confirmation test <span class="chev">▶</span></div>
     <div class="rbody">
       <ul>
-        <li>Последняя доза антибиотиков — <b>3 июля</b>. Алкоголь не раньше ~6 июля.</li>
-        <li>Omeprazole можно продолжить для заживления, но <b>отменить за 2 недели до теста</b>.</li>
-        <li>Дыхательный тест (Urea Breath Test) — <b>не раньше чем через 4 недели</b> после окончания антибиотиков и De-Nol, т.е. примерно <b>с 31 июля</b>.</li>
-        <li>В период отмены омепразола желудок можно «перекрыть» фамотидином/антацидом — на тест не влияют.</li>
+        <li>Last antibiotic dose — <b>July 3</b>. No alcohol before ~July 6.</li>
+        <li>Omeprazole can be continued for healing, but <b>stop it 2 weeks before the test</b>.</li>
+        <li>Urea Breath Test — <b>no earlier than 4 weeks</b> after finishing antibiotics and De-Nol, i.e. from about <b>July 31</b>.</li>
+        <li>During the omeprazole pause you can protect the stomach with famotidine/an antacid — they don't affect the test.</li>
       </ul>
     </div>
   </div>
 
-  <p class="disc">На основе схемы лечащего врача и рекомендаций ACG (2024) / Maastricht VI. Не заменяет консультацию врача.</p>
+  <p class="disc">Based on your doctor's regimen and ACG (2024) / Maastricht VI guidelines. Not a substitute for medical advice.</p>
 
 <script>
 const START = new Date(2026,5,20); // 20 June 2026 (Day 1)
 const TOTAL_DAYS = 14;
-const DOW = ['вс','пн','вт','ср','чт','пт','сб'];
-const MON = ['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const slots = [
-  {t:'07:30', meds:[['Omeprazole 20','p-omz'],['De-Nol 120','p-den'],['Tetracycline 500','p-tet']], n:'Натощак, водой, без молока'},
-  {t:'08:00', meds:[['Metronidazole 500','p-met'],['Rebamipide 100','p-reb']], n:'Завтрак, с едой'},
-  {t:'13:00', meds:[['De-Nol 120','p-den'],['Tetracycline 500','p-tet']], n:'За 30 мин до обеда, без молока'},
-  {t:'13:30', meds:[['Metronidazole 500','p-met'],['Rebamipide 100','p-reb']], n:'Обед, с едой'},
-  {t:'~15:30', meds:[['Пробиотик','p-pro']], n:'≥2 ч от антибиотиков'},
-  {t:'18:30', meds:[['De-Nol 120','p-den'],['Tetracycline 500','p-tet']], n:'За 30 мин до ужина, без молока'},
-  {t:'19:00', meds:[['Metronidazole 500','p-met'],['Rebamipide 100','p-reb']], n:'Ужин, с едой'},
-  {t:'22:30', meds:[['Omeprazole 20','p-omz'],['De-Nol 120','p-den'],['Tetracycline 500','p-tet']], n:'Натощак, не ложиться 30 мин'},
+  {t:'07:30', meds:[['Omeprazole 20','p-omz'],['De-Nol 120','p-den'],['Tetracycline 500','p-tet']], n:'Empty stomach, with water, no milk'},
+  {t:'08:00', meds:[['Metronidazole 500','p-met'],['Rebamipide 100','p-reb']], n:'Breakfast, with food'},
+  {t:'13:00', meds:[['De-Nol 120','p-den'],['Tetracycline 500','p-tet']], n:'30 min before lunch, no milk'},
+  {t:'13:30', meds:[['Metronidazole 500','p-met'],['Rebamipide 100','p-reb']], n:'Lunch, with food'},
+  {t:'~15:30', meds:[['Probiotic','p-pro']], n:'≥2h away from antibiotics'},
+  {t:'18:30', meds:[['De-Nol 120','p-den'],['Tetracycline 500','p-tet']], n:'30 min before dinner, no milk'},
+  {t:'19:00', meds:[['Metronidazole 500','p-met'],['Rebamipide 100','p-reb']], n:'Dinner, with food'},
+  {t:'22:30', meds:[['Omeprazole 20','p-omz'],['De-Nol 120','p-den'],['Tetracycline 500','p-tet']], n:"Empty stomach, don't lie down 30 min"},
 ];
 const KEY='hp_tracker_v1';
 let state = JSON.parse(localStorage.getItem(KEY) || '{}');
@@ -158,7 +158,7 @@ let html='';
 for(let d=2; d<=TOTAL_DAYS; d++){
   const date = new Date(START); date.setDate(START.getDate()+(d-1));
   const isToday = date.getTime()===today.getTime();
-  const dateStr = DOW[date.getDay()]+', '+date.getDate()+' '+MON[date.getMonth()];
+  const dateStr = DOW[date.getDay()]+', '+MON[date.getMonth()]+' '+date.getDate();
   let allDone=true, slotHtml='';
   slots.forEach((s,i)=>{
     const id='d'+d+'_'+i;
@@ -170,11 +170,11 @@ for(let d=2; d<=TOTAL_DAYS; d++){
       <span class="stime">${s.t}</span><span class="sbody">${pills}<div class="snote">${s.n}</div></span></label></div>`;
   });
   const openCls = isToday ? 'open':'';
-  const badge = isToday ? '<span class="badge b-today">сегодня</span>' : (allDone?'<span class="badge b-done">✓</span>':'');
+  const badge = isToday ? '<span class="badge b-today">today</span>' : (allDone?'<span class="badge b-done">✓</span>':'');
   html+=`<div class="day ${isToday?'today':''} ${allDone?'done':''} ${openCls}" id="day${d}">
     <div class="dhead" onclick="toggleDay(${d})">
-      <div class="dnum">${d}<small>ДЕНЬ</small></div>
-      <div class="dtitle"><div class="dt1">${dateStr}</div><div class="dt2">8 приёмов</div></div>
+      <div class="dnum">${d}<small>DAY</small></div>
+      <div class="dtitle"><div class="dt1">${dateStr}</div><div class="dt2">8 doses</div></div>
       ${badge}<span class="chev">▶</span>
     </div>
     <div class="dbody">${slotHtml}</div>
@@ -198,7 +198,7 @@ function updateProgress(){
   document.getElementById('pct').textContent=pct+'%';
   document.getElementById('cnt').textContent=done+' / '+total;
 }
-function resetAll(){ if(confirm('Сбросить все отметки?')){ state={}; save(); location.reload(); } }
+function resetAll(){ if(confirm('Reset all checkmarks?')){ state={}; save(); location.reload(); } }
 updateProgress();
 
 document.querySelectorAll('[data-ref]').forEach(r=>{
